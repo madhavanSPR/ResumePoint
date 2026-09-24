@@ -26,6 +26,7 @@ export interface ResumeCheckpoint {
   anchor?: ContentAnchor;
   createdAt: number;
   updatedAt: number;
+  autoUpdate?: boolean;
   media?: CheckpointMedia;
 }
 

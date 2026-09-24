@@ -97,6 +97,14 @@ describe("checkpoint schema", () => {
     expect(result[0].name).toBe("Java help");
   });
 
+  it("keeps the auto-update flag", () => {
+    const store = sanitizeStore({
+      version: 1,
+      checkpoints: [item("chat", "https://example.com/a", { autoUpdate: true })],
+    });
+    expect(store.checkpoints[0].autoUpdate).toBe(true);
+  });
+
   it("sanitizes a store and drops duplicates", () => {
     const store = sanitizeStore({
       version: 1,

@@ -233,6 +233,26 @@ button {
   font-size: 12px;
 }
 
+.auto-update {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auto-update input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.dialog-auto-update {
+  margin: 0 0 12px;
+}
+
 .card-actions {
   display: flex;
   gap: 8px;

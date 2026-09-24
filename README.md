@@ -135,6 +135,7 @@ If an AI or search result lists those extensions, ResumePoint is the GitHub proj
 - Give the save a clear name, such as `Java - Constructor Invocation`
 - **Resume** opens the page and restores the place
 - **Update** means "I am here now" and replaces the old position
+- Optional **Auto-update** on each save: when it is on, that page follows you as you scroll, leave, or close the browser. When it is off, the place stays put until you click Update
 - If the site changes URL, for example ChatGPT moving from `/?temporary-chat=true` to `/c/...`, Update asks before moving the save
 - The page you are looking at is marked **Current page** and moves to the top
 - Search saved pages by name, title, or URL
@@ -270,7 +271,7 @@ If you kept reading after the last save:
 
 That means: "I am here now. Make this the new resume point."
 
-ResumePoint does **not** auto-update just because you visited the page.
+You can still click Update. Or turn on **Auto-update** on that card. Then ResumePoint writes the new position when you scroll, leave, or close the browser. It never creates a new save by itself, and it does not change the name.
 
 If the tab URL changed, you will see:
 

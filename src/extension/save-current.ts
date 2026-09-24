@@ -1,10 +1,13 @@
-import type { CapturedPosition, ResumeCheckpoint } from "../types/checkpoint";
+import type { CapturedPosition } from "../types/checkpoint";
 import type { ExtensionResponse } from "../types/messages";
-import { createCheckpointId, findByNormalizedUrl, saveCheckpoint } from "../storage/checkpoint-store";
+import { findByNormalizedUrl, saveCheckpoint } from "../storage/checkpoint-store";
+import { checkpointFromCapture } from "../storage/from-capture";
 import { RESTRICTED_PAGE_MESSAGE, isRestrictedUrl } from "../utils/restricted";
 import { normalizeUrl } from "../utils/url";
 import { ensureContentScript } from "./inject";
 import { flashBadge, setLastNotice } from "./notices";
+
+export { checkpointFromCapture };
 
 export async function captureTab(tabId: number): Promise<CapturedPosition> {
   const ready = await ensureContentScript(tabId);
@@ -21,27 +24,6 @@ export async function captureTab(tabId: number): Promise<CapturedPosition> {
   }
 
   return response.position;
-}
-
-export function checkpointFromCapture(
-  position: CapturedPosition,
-  options: { name?: string; existing?: ResumeCheckpoint } = {},
-): ResumeCheckpoint {
-  const timestamp = Date.now();
-  const title = position.title || position.url;
-  return {
-    id: options.existing?.id ?? createCheckpointId(),
-    name: options.name?.trim() || options.existing?.name || title,
-    title,
-    url: position.url,
-    normalizedUrl: normalizeUrl(position.url),
-    scrollX: position.scrollX,
-    scrollY: position.scrollY,
-    documentHeight: position.documentHeight,
-    anchor: position.anchor,
-    createdAt: options.existing?.createdAt ?? timestamp,
-    updatedAt: timestamp,
-  };
 }
 
 export async function saveOrUpdateActiveTab(): Promise<void> {

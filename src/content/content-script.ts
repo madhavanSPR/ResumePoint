@@ -1,5 +1,6 @@
 import type { ExtensionMessage, ExtensionResponse } from "../types/messages";
 import type { RestorePayload } from "../types/checkpoint";
+import { startAutoSave, pauseAutoSave } from "./auto-save";
 import { capturePosition } from "./position-capture";
 import { restorePosition } from "./position-restore";
 import { showPageNotice } from "./notice";
@@ -11,7 +12,9 @@ async function runRestore(payload: RestorePayload): Promise<ExtensionResponse> {
     return { type: "RESTORE_RESULT", result: { ok: true, method: "scroll" } };
   }
   activeRestoreId = payload.id;
+  pauseAutoSave(6000);
   const result = await restorePosition(payload);
+  pauseAutoSave();
   if (!result.ok) {
     showPageNotice(
       result.message ?? "Page opened, but the previous position could not be restored.",
@@ -64,3 +67,4 @@ chrome.runtime.onMessage.addListener(
 );
 
 void requestPendingRestore();
+startAutoSave();

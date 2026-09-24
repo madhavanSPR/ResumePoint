@@ -11,6 +11,7 @@ interface CheckpointCardProps {
   onUpdate: () => void;
   onRename: () => void;
   onDelete: () => void;
+  onAutoUpdateChange: (enabled: boolean) => void;
 }
 
 export function CheckpointCard({
@@ -21,6 +22,7 @@ export function CheckpointCard({
   onUpdate,
   onRename,
   onDelete,
+  onAutoUpdateChange,
 }: CheckpointCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -63,6 +65,15 @@ export function CheckpointCard({
           ) : null}
           <h2 className="card-title">{checkpoint.name}</h2>
           <p className="card-meta">Last updated: {formatLastUpdated(checkpoint.updatedAt)}</p>
+          <label className="auto-update" title="When on, this save follows you as you scroll, leave, or close the browser.">
+            <input
+              type="checkbox"
+              checked={Boolean(checkpoint.autoUpdate)}
+              disabled={busy}
+              onChange={(event) => onAutoUpdateChange(event.target.checked)}
+            />
+            Auto-update
+          </label>
         </div>
         <div className="menu" ref={menuRef}>
           <button

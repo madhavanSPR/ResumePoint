@@ -44,6 +44,7 @@ export function App() {
   const [query, setQuery] = useState("");
   const [dialog, setDialog] = useState<DialogState>(null);
   const [draftName, setDraftName] = useState("");
+  const [draftAutoUpdate, setDraftAutoUpdate] = useState(false);
   const [banner, setBanner] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -95,6 +96,7 @@ export function App() {
         return;
       }
       setDraftName(position.title || position.url);
+      setDraftAutoUpdate(false);
       setDialog({ type: "save", position });
     } catch (error) {
       setDialog({
@@ -107,11 +109,24 @@ export function App() {
     }
   }
 
-  async function persistCapture(position: CapturedPosition, name?: string, existing?: ResumeCheckpoint) {
-    const checkpoint = checkpointFromCapture(position, { name, existing });
+  async function persistCapture(
+    position: CapturedPosition,
+    name?: string,
+    existing?: ResumeCheckpoint,
+    autoUpdate?: boolean,
+  ) {
+    const checkpoint = checkpointFromCapture(position, { name, existing, autoUpdate });
     await saveCheckpoint(checkpoint);
     await refresh();
     setDialog(null);
+  }
+
+  async function handleAutoUpdateChange(checkpoint: ResumeCheckpoint, enabled: boolean) {
+    await saveCheckpoint({
+      ...checkpoint,
+      autoUpdate: enabled,
+    });
+    await refresh();
   }
 
   async function handleUpdate(checkpoint: ResumeCheckpoint) {
@@ -285,6 +300,7 @@ export function App() {
                     setDialog({ type: "rename", checkpoint });
                   }}
                   onDelete={() => setDialog({ type: "delete", checkpoint })}
+                  onAutoUpdateChange={(enabled) => void handleAutoUpdateChange(checkpoint, enabled)}
                 />
               ))
             )}
@@ -316,10 +332,18 @@ export function App() {
             onChange={(event) => setDraftName(event.target.value)}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                void persistCapture(dialog.position, draftName);
+                void persistCapture(dialog.position, draftName, undefined, draftAutoUpdate);
               }
             }}
           />
+          <label className="auto-update dialog-auto-update">
+            <input
+              type="checkbox"
+              checked={draftAutoUpdate}
+              onChange={(event) => setDraftAutoUpdate(event.target.checked)}
+            />
+            Auto-update this page as I keep reading
+          </label>
           <div className="dialog-actions">
             <button type="button" className="button ghost" onClick={() => setDialog(null)}>
               Cancel
@@ -327,7 +351,7 @@ export function App() {
             <button
               type="button"
               className="button primary"
-              onClick={() => void persistCapture(dialog.position, draftName)}
+              onClick={() => void persistCapture(dialog.position, draftName, undefined, draftAutoUpdate)}
             >
               Save
             </button>

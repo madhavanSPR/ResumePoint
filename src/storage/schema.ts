@@ -96,6 +96,7 @@ export function sanitizeCheckpoint(value: unknown): ResumeCheckpoint | undefined
   const scrollY = asNumber(value.scrollY) ?? 0;
   const documentHeight = asNumber(value.documentHeight) ?? 0;
   const anchor = sanitizeAnchor(value.anchor);
+  const autoUpdate = value.autoUpdate === true;
 
   return {
     id,
@@ -108,6 +109,7 @@ export function sanitizeCheckpoint(value: unknown): ResumeCheckpoint | undefined
     documentHeight,
     createdAt,
     updatedAt,
+    ...(autoUpdate ? { autoUpdate: true } : {}),
     ...(anchor ? { anchor } : {}),
   };
 }
@@ -153,6 +155,7 @@ export function upsertCheckpoint(
       id: existing.id,
       name: incoming.name || existing.name,
       createdAt: existing.createdAt,
+      autoUpdate: incoming.autoUpdate ?? existing.autoUpdate,
     };
     return checkpoints
       .filter(
@@ -174,6 +177,7 @@ export function upsertCheckpoint(
     id: existing.id,
     name: incoming.name || existing.name,
     createdAt: existing.createdAt,
+    autoUpdate: incoming.autoUpdate ?? existing.autoUpdate,
   };
   return next;
 }

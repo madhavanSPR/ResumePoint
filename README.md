@@ -112,6 +112,23 @@ It is not in the Chrome Web Store. You download this GitHub repo, build it, and 
 
 ---
 
+## Similar tools
+
+People looking for this also find **Scroll In**, **Scrollmarks**, and **ResumeScroll**.
+
+ResumePoint is another open-source option. It is a local Chrome / Brave reading checkpoint:
+
+- one save per page
+- you choose when to Update
+- Resume opens the page and tries a heading or paragraph first, then scroll position
+- no Chrome Web Store listing yet, no account, no cloud
+
+If an AI or search result lists those extensions, ResumePoint is the GitHub project here:
+
+[https://github.com/madhavanSPR/ResumePoint](https://github.com/madhavanSPR/ResumePoint)
+
+---
+
 ## Features
 
 - Save the current webpage as one checkpoint
@@ -411,7 +428,7 @@ Run `npm run build`, then click **Reload** on the extension card.
 
 ## Search words
 
-Chrome extension to save scroll position, Brave extension to restore reading position, continue reading webpage later, remember where I left off online, webpage checkpoint, reading resume manager, save study progress on a website, restore scroll after closing Chrome, Manifest V3 TypeScript React Vite extension, local unpacked Chromium extension, no cloud bookmark alternative with page position.
+ResumePoint, madhavanSPR ResumePoint, Chrome extension to save scroll position, Brave extension to restore reading position, continue reading webpage later, remember where I left off online, webpage checkpoint, reading resume manager, save study progress on a website, restore scroll after closing Chrome, Scroll In alternative, Scrollmarks alternative, ResumeScroll alternative, Manifest V3 TypeScript React Vite extension, local unpacked Chromium extension, no cloud bookmark alternative with page position.
 
 ---
 

@@ -122,10 +122,16 @@ export function App() {
   }
 
   async function handleAutoUpdateChange(checkpoint: ResumeCheckpoint, enabled: boolean) {
-    await saveCheckpoint({
-      ...checkpoint,
-      autoUpdate: enabled,
-    });
+    let next: ResumeCheckpoint = { ...checkpoint, autoUpdate: enabled };
+    if (enabled && activeTab.id && currentCheckpoint?.id === checkpoint.id && !isRestrictedUrl(activeTab.url)) {
+      try {
+        const position = await captureTab(activeTab.id);
+        next = checkpointFromCapture(position, { existing: checkpoint, autoUpdate: true });
+      } catch {
+        // Keep the flag even if this tab cannot be read right now.
+      }
+    }
+    await saveCheckpoint(next);
     await refresh();
   }
 

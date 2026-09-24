@@ -7,7 +7,8 @@ export type ExtensionMessage =
   | { type: "GET_PENDING_RESTORE" }
   | { type: "SHOW_NOTICE"; message: string; kind?: "info" | "error" | "success" }
   | { type: "RESUME_CHECKPOINT"; checkpointId: string }
-  | { type: "RESTORE_DONE" };
+  | { type: "RESTORE_DONE" }
+  | { type: "AUTO_SAVE"; position: CapturedPosition };
 
 export type ExtensionResponse =
   | { type: "PONG" }

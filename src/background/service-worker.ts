@@ -5,6 +5,11 @@ import { clearPendingRestore, peekPendingRestore } from "../extension/pending-re
 import { handleTabComplete, resumeCheckpoint } from "../extension/resume";
 import { saveOrUpdateActiveTab } from "../extension/save-current";
 import { setLastNotice } from "../extension/notices";
+import {
+  persistAutoSave,
+  persistTabOnClose,
+  rememberTabPosition,
+} from "../extension/auto-save-persist";
 
 chrome.runtime.onInstalled.addListener(() => {
   void chrome.action.setBadgeBackgroundColor({ color: "#3D4FD7" });
@@ -23,6 +28,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 chrome.tabs.onRemoved.addListener((tabId) => {
+  void persistTabOnClose(tabId);
   void clearPendingRestore(tabId);
 });
 
@@ -36,6 +42,17 @@ chrome.runtime.onMessage.addListener(
       }
       void peekPendingRestore(tabId).then((payload) => {
         sendResponse({ type: "PENDING_RESTORE", payload } satisfies ExtensionResponse);
+      });
+      return true;
+    }
+
+    if (message.type === "AUTO_SAVE") {
+      const tabId = sender.tab?.id;
+      if (tabId) {
+        rememberTabPosition(tabId, message.position);
+      }
+      void persistAutoSave(message.position).then(() => {
+        sendResponse({ type: "OK" } satisfies ExtensionResponse);
       });
       return true;
     }

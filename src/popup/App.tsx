@@ -16,8 +16,8 @@ import { displayUrl, normalizeUrl, urlsMatch } from "../utils/url";
 import { CheckpointCard } from "./components/CheckpointCard";
 import { Dialog } from "./components/Dialog";
 import { EmptyState } from "./components/EmptyState";
-import { BackIcon, BookmarkIcon, CoffeeIcon, PlusIcon, SettingsIcon } from "./components/Icons";
-import { BUY_ME_A_COFFEE_URL, Settings } from "./components/Settings";
+import { BackIcon, BookmarkIcon, PlusIcon, SettingsIcon } from "./components/Icons";
+import { Settings } from "./components/Settings";
 import { useActiveTab } from "./hooks/useActiveTab";
 import { useCheckpoints } from "./hooks/useCheckpoints";
 
@@ -220,39 +220,27 @@ export function App() {
           <BookmarkIcon className="brand-mark" />
           <h1 className="brand-title">ResumePoint</h1>
         </div>
-        <div className="header-actions">
-          <a
+        {view === "settings" ? (
+          <button
+            type="button"
             className="icon-button"
-            href={BUY_ME_A_COFFEE_URL}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Buy me a coffee"
-            title="Buy me a coffee"
+            aria-label="Back to saved pages"
+            title="Back"
+            onClick={() => setView("list")}
           >
-            <CoffeeIcon />
-          </a>
-          {view === "settings" ? (
-            <button
-              type="button"
-              className="icon-button"
-              aria-label="Back to saved pages"
-              title="Back"
-              onClick={() => setView("list")}
-            >
-              <BackIcon />
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="icon-button"
-              aria-label="Open settings"
-              title="Settings"
-              onClick={() => setView("settings")}
-            >
-              <SettingsIcon />
-            </button>
-          )}
-        </div>
+            <BackIcon />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="icon-button"
+            aria-label="Open settings"
+            title="Settings"
+            onClick={() => setView("settings")}
+          >
+            <SettingsIcon />
+          </button>
+        )}
       </header>
 
       {banner ? (

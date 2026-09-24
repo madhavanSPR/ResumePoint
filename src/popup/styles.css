@@ -125,12 +125,6 @@ button {
   letter-spacing: -0.02em;
 }
 
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
 .icon-button {
   display: inline-flex;
   align-items: center;

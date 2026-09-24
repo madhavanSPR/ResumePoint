@@ -1,8 +1,5 @@
 import { useRef, useState } from "react";
 import { exportStore, importStore } from "../../storage/checkpoint-store";
-import { CoffeeIcon } from "./Icons";
-
-export const BUY_ME_A_COFFEE_URL = "https://buymeacoffee.com/problem_solver";
 
 interface SettingsProps {
   onImported: () => Promise<void>;
@@ -93,19 +90,6 @@ export function Settings({ onImported }: SettingsProps) {
           ResumePoint stores checkpoints only in this browser. It does not collect
           history, show ads, or send URLs to a server.
         </p>
-      </div>
-      <div className="settings-card">
-        <h3>Support</h3>
-        <p>If ResumePoint is useful, you can buy Madhav a coffee.</p>
-        <a
-          className="button secondary"
-          href={BUY_ME_A_COFFEE_URL}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <CoffeeIcon />
-          Buy me a coffee
-        </a>
       </div>
     </section>
   );

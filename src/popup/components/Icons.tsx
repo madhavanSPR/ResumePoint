@@ -48,14 +48,3 @@ export function PlusIcon() {
     </svg>
   );
 }
-
-export function CoffeeIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M4.5 8.25h11.75c.69 0 1.25.56 1.25 1.25v.75h.75A2.75 2.75 0 0 0 21 7.5h-1.25V6h1.25A4.25 4.25 0 0 1 21 14.48V15A6.75 6.75 0 0 1 14.25 21.75h-5.5A6.75 6.75 0 0 1 2 15V9.5c0-.69.56-1.25 1.25-1.25H4.5Zm13 3V9.5H4.75v5.5A4.25 4.25 0 0 0 9 19.25h5.25A4.25 4.25 0 0 0 18.5 15v-.75h-.75a1.25 1.25 0 0 1-1.25-1.25v-1.75Z"
-      />
-    </svg>
-  );
-}

@@ -2,185 +2,421 @@
 
 **Save where you stopped. Resume exactly there.**
 
-ResumePoint is a local Chromium extension for Chrome and Brave. It is a resume-position manager, not a bookmark manager. One click opens a saved page and returns you to the heading or paragraph where you stopped.
+ResumePoint is a free, open-source **Chrome extension** and **Brave extension** that remembers the exact place you stopped on a webpage.
 
-It works on ordinary websites: documentation, tutorials, blogs, forums, articles, course pages, and similar reading surfaces. It does not include course-specific logic or fake completion percentages.
+It is a **reading resume tool**, a **scroll position saver**, and a **webpage checkpoint manager**.
 
-## Why it exists
+It is **not** a bookmark manager.
+It is **not** a course tracker.
+It does **not** show fake progress like "67% complete".
 
-Closing a browser or switching tabs should not mean hunting for the same lesson and scrolling back to the same sentence. ResumePoint stores a checkpoint: the URL, a name, the reading position, and a content anchor. Later, **Resume** opens that page and restores the location.
+You click **Save**.
+Later you click **Resume**.
+The browser opens that page and takes you back to the same heading, paragraph, or scroll place.
+
+Repository: [https://github.com/madhavanSPR/ResumePoint](https://github.com/madhavanSPR/ResumePoint)
+
+---
+
+## What problem does this solve?
+
+People ask AI tools and search engines questions like:
+
+- How do I save my scroll position in Chrome?
+- How do I continue reading a webpage where I left off?
+- Is there a Chrome extension to remember reading position?
+- How do I resume a documentation page after closing the browser?
+- How do I save progress on a tutorial without using bookmarks?
+- Brave extension to restore scroll position
+- Remember where I stopped studying online
+
+Normal bookmarks only save the link. They open the top of the page. You still have to scroll and hunt for the section.
+
+ResumePoint saves:
+
+- the page URL
+- a name you choose
+- the reading position
+- a nearby heading or paragraph (content anchor)
+- the last updated time
+
+Then one click restores it.
 
 ```text
-Save → study → Update when you stop → later, Resume
+Open page
+    |
+    v
+Read / study / research
+    |
+    v
+Save current page
+    |
+    v
+Keep reading
+    |
+    v
+Click Update when you stop
+    |
+    v
+Close the tab or the browser
+    |
+    v
+Later: click Resume
+    |
+    v
+Page opens at the same place
 ```
+
+---
+
+## Who is this for?
+
+Anyone who reads on the web and comes back later:
+
+- students reading Java, Python, SQL, or other lessons
+- developers reading docs, Stack Overflow, GitHub, or blogs
+- people reading articles, Reddit, research pages, or news
+- anyone who closes Chrome or Brave and does not want to scroll again
+
+It works on ordinary websites. It does not assume you are in a course.
+
+Examples of pages you can save:
+
+- Java documentation
+- Python tutorials
+- SQL lessons
+- MDN, Oracle docs, official language docs
+- Udemy or other lesson pages in the browser
+- blogs and articles
+- Reddit and forum threads
+- Stack Overflow answers
+- ChatGPT chats after the URL becomes a real `/c/...` link
+- research papers and news articles
+
+---
+
+## What browsers work?
+
+ResumePoint is a **Manifest V3 Chromium extension**.
+
+| Browser | Works? | How to open the extensions page |
+| --- | --- | --- |
+| Google Chrome | Yes | `chrome://extensions` |
+| Brave Browser | Yes | `brave://extensions` |
+| Microsoft Edge | Yes, in most cases | `edge://extensions` |
+| Vivaldi | Yes, in most cases | `vivaldi://extensions` |
+| Firefox | No | Different extension system |
+| Safari | No | Different extension system |
+
+It is not in the Chrome Web Store. You download this GitHub repo, build it, and load the `dist` folder as an **unpacked extension**.
+
+---
 
 ## Features
 
-- Save the current page as one checkpoint
-- Custom name on save; rename later
-- Update replaces the saved position only when you ask
-- Resume opens or focuses the page and restores the location
-- Current page is pinned and labeled at the top of the popup
-- Search by name, title, or URL
-- Delete with confirmation
-- JSON export and import
-- Dark mode follows `prefers-color-scheme`
-- Works entirely offline after install
+- Save the current webpage as one checkpoint
+- Give the save a clear name, such as `Java - Constructor Invocation`
+- **Resume** opens the page and restores the place
+- **Update** means "I am here now" and replaces the old position
+- If the site changes URL, for example ChatGPT moving from `/?temporary-chat=true` to `/c/...`, Update asks before moving the save
+- The page you are looking at is marked **Current page** and moves to the top
+- Search saved pages by name, title, or URL
+- Delete a save only after a confirm step
+- Export and import JSON backups
+- Works offline after you install it
+- Stores data only in this browser
+- No account, no cloud, no ads, no analytics
+- Light and dark mode follow the system theme
+- Keyboard shortcuts
 
-Video playback timestamps are reserved in the data model but not used in v1.
+It does **not** restore YouTube video time in v1. It restores page position.
 
-## Install locally
+---
 
-ResumePoint is not published to a store. Clone the repo, build it, and load the folder as an unpacked extension.
+## Quick start
+
+You need [Node.js](https://nodejs.org/) and [Git](https://git-scm.com/).
+
+```text
+1. Clone this repo
+2. Install packages
+3. Build the extension
+4. Load the dist folder in Chrome or Brave
+5. Pin ResumePoint and use Save / Update / Resume
+```
 
 ```bash
-git clone https://github.com/USERNAME/ResumePoint.git
+git clone https://github.com/madhavanSPR/ResumePoint.git
 cd ResumePoint
 npm install
 npm run build
 ```
 
-This type-checks the project and writes a Manifest V3 bundle to `dist/`.
+The build creates a `dist` folder. That folder is the extension.
 
-### Chrome
+### Load in Google Chrome
 
-1. Open `chrome://extensions`
-2. Turn on **Developer mode**
-3. Click **Load unpacked**
-4. Choose the `dist` folder in this project
+```text
+chrome://extensions
+        |
+        v
+Turn on Developer mode (top right)
+        |
+        v
+Click "Load unpacked"
+        |
+        v
+Select the dist folder
+        |
+        v
+Pin ResumePoint from the puzzle-piece icon
+```
 
-### Brave
+1. Open Chrome.
+2. Go to `chrome://extensions`.
+3. Turn on **Developer mode**.
+4. Click **Load unpacked**.
+5. Choose the `dist` folder inside this project.
+6. Click the puzzle-piece icon and pin **ResumePoint**.
 
-1. Open `brave://extensions`
-2. Turn on **Developer mode**
-3. Click **Load unpacked**
-4. Choose the same `dist` folder
+### Load in Brave Browser
 
-Edge and Vivaldi can load the same folder the same way (`edge://extensions`, `vivaldi://extensions`).
+```text
+brave://extensions
+        |
+        v
+Turn on Developer mode
+        |
+        v
+Click "Load unpacked"
+        |
+        v
+Select the same dist folder
+```
 
-After you rebuild, click **Reload** on the extension card.
+1. Open Brave.
+2. Go to `brave://extensions`.
+3. Turn on **Developer mode**.
+4. Click **Load unpacked**.
+5. Choose the same `dist` folder.
 
-## Daily use
+### Load in Edge or Vivaldi
 
-1. Open a page and read to where you want to stop.
-2. Click the ResumePoint icon, then **Save current page**.
-3. Optionally edit the name.
-4. Before you leave, open the popup again and click **Update**.
-5. Later, click **Resume**. The page opens and scrolls back.
+Use `edge://extensions` or `vivaldi://extensions`, turn on Developer mode, then load the same `dist` folder.
 
-If the current tab is already saved, that card is marked **Current page** and sits at the top.
+After you change code and run `npm run build` again, open the extensions page and click **Reload** on ResumePoint.
 
-If you click **Update** while the tab has moved to a different URL — for example ChatGPT going from `/?temporary-chat=true` to `/c/...` — ResumePoint shows the saved link and the current link, then lets you move the checkpoint to this page. Same-page updates still happen immediately.
+---
 
-Saving the same page again does not create a duplicate. ResumePoint asks whether to update the stored position.
+## How to use it
+
+```text
+Save
+  |
+  v
+Study
+  |
+  v
+Update when you stop
+  |
+  v
+Later, Resume
+```
+
+### Save a page
+
+1. Open the webpage you are reading.
+2. Scroll to the place you want to remember.
+3. Click the ResumePoint icon.
+4. Click **Save current page**.
+5. Keep the title or type a shorter name.
+6. Click **Save**.
+
+If that page is already saved, ResumePoint will not make a second copy. It asks if you want to **Update position**.
+
+You cannot save browser pages such as `chrome://`, `brave://`, or the Chrome Web Store.
+
+### Come back later
+
+1. Click the ResumePoint icon. You do not need to open the website first.
+2. Click **Resume** on that saved page.
+3. Chrome or Brave opens the link, or focuses the tab if it is already open.
+4. ResumePoint waits for the page to load, then scrolls to the saved place.
+
+### Update the saved place
+
+If you kept reading after the last save:
+
+1. Stay on that page.
+2. Open ResumePoint.
+3. Click **Update**.
+
+That means: "I am here now. Make this the new resume point."
+
+ResumePoint does **not** auto-update just because you visited the page.
+
+If the tab URL changed, you will see:
+
+```text
+Saved page:    chatgpt.com/?temporary-chat=true
+Current page:  chatgpt.com/c/6ab38ce5-...
+
+[ Cancel ]   [ Update to this page ]
+```
+
+### Find, rename, or delete
+
+- Use the search box to filter by name, title, or URL.
+- Open the `...` menu on a card to **Rename** or **Delete**.
+- Delete asks for confirmation.
+
+### Backup
+
+Open the gear icon.
+
+- **Export data** downloads a JSON file.
+- **Import data** loads a JSON backup.
+
+Chrome and Brave do not share saved pages. Export from one and import into the other if you want a copy.
+
+---
 
 ## Keyboard shortcuts
 
-| Shortcut | Action |
+| Shortcut | What it does |
 | --- | --- |
-| `Alt+Shift+R` | Open the popup |
-| `Alt+Shift+S` | Save a new checkpoint, or update the existing one for this page |
+| `Alt+Shift+R` | Open ResumePoint |
+| `Alt+Shift+S` | Save this page, or update it if it is already saved |
 
-These are suggested keys. Change them in `chrome://extensions/shortcuts` or `brave://extensions/shortcuts`. ResumePoint does not bind `Ctrl+Shift+R` or `Ctrl+S`.
+Change them here:
 
-## Development
+- Chrome: `chrome://extensions/shortcuts`
+- Brave: `brave://extensions/shortcuts`
 
-```bash
-npm install
-npm run dev
-```
+ResumePoint does not use `Ctrl+S` or `Ctrl+Shift+R`.
 
-`npm run dev` starts the CRXJS Vite server with extension hot reload. Load `dist/` unpacked, then keep the dev server running while you edit.
+---
 
-```bash
-npm test
-npm run build
-```
+## How restore works
 
-`npm run build` must be run with the dev server stopped so the production bundle is written cleanly to `dist/`.
-
-## Architecture
+Bookmarks only store a URL. ResumePoint also stores a **content anchor** so the page can change a little and still land near the same text.
 
 ```text
-src/
-├── background/service-worker.ts   Resume, shortcuts, pending restore
-├── content/                       Capture anchors and restore position
-├── popup/                         React popup UI
-├── storage/                       chrome.storage.local repository
-├── extension/                     Tab injection and resume helpers
-├── utils/                         URL matching, search, ordering
-└── types/                         Checkpoint and message types
+Click Resume
+    |
+    v
+Open or focus the saved URL
+    |
+    v
+Wait for the page (including late-loading sites)
+    |
+    v
+1. Find the saved heading or paragraph
+    |
+    +-- found --> scroll to that text
+    |
+    +-- missing --> scroll to the saved pixel position
+                    then look again
+    |
+    v
+Retry a few times, then stop
 ```
 
-Save and update talk to the content script in the active tab, then write `chrome.storage.local`. Resume is handled by the service worker so it still works after the popup closes: it focuses a matching tab or opens the URL, stores a pending restore in `chrome.storage.session`, and the content script restores the anchor or scroll position with bounded retries.
+This helps on React, Vue, Next.js, and other pages that draw content after load.
 
-Restoration order:
-
-1. Find the stored heading or paragraph
-2. If it is missing, scroll to the saved `scrollY` to wake lazy content, then search again
-3. Align the found element using the stored viewport offset
-4. Fall back to `scrollX` / `scrollY`
-5. Retry on a short schedule plus a debounced `MutationObserver`, then stop
-
-## Permissions
-
-| Permission | Why |
-| --- | --- |
-| `storage` | Save checkpoints locally |
-| `tabs` | Read the active tab, detect the current page, and focus an existing tab on Resume |
-| `scripting` | Inject the content script if a page was already open when the extension loaded |
-| `http://*/*` and `https://*/*` | Capture and restore position on the pages you save |
-
-Host access is required for Resume. `activeTab` is revoked when a tab navigates, and Resume must restore a page after opening it. Content scripts are not registered for `chrome://`, `brave://`, `edge://`, `vivaldi://`, extension pages, or the Chrome Web Store.
+---
 
 ## Privacy
 
-- Checkpoints stay in `chrome.storage.local` on this browser
-- No accounts, backend, analytics, or advertising
-- No browsing history collection
-- Export is a local JSON file you choose to download
+ResumePoint runs on your computer.
 
-## Limitations
+- Saved pages stay in `chrome.storage.local`
+- No login
+- No server
+- No ads
+- No analytics
+- No browsing history upload
 
-- Restricted browser pages cannot be saved
-- Pages that never expose a stable heading or paragraph may only restore a pixel scroll
-- Infinite-scroll feeds can shift after ads or new items load
-- Video timestamps are not restored in v1
-- Chrome and Brave do not share `chrome.storage.local`. Use export/import to copy checkpoints
+Your saved URLs never leave the browser unless you export the JSON file yourself.
 
-## Troubleshooting
+---
 
-**The popup says it cannot access this page.** You are on a browser UI page or the extension store. Open an `http` or `https` page.
+## Permissions, in plain words
 
-**Resume opens the page but stays at the top.** The site may have replaced the original content. Click **Update** on the new location. Dynamic sites get several restore attempts; if they all miss, ResumePoint shows a short on-page notice.
+| Permission | Why it is needed |
+| --- | --- |
+| `storage` | Remember your saved pages |
+| `tabs` | See the current tab and jump back to a saved tab |
+| `scripting` | Read and restore the place on the page |
+| Access to `http` and `https` pages | Resume has to open a saved website and scroll it |
 
-**Unable to open this page.** The URL may have moved or the site may be down.
+It does not run on `chrome://`, `brave://`, `edge://`, extension pages, or the Chrome Web Store.
 
-**A shortcut does nothing.** Another extension or the OS may own that combination. Reassign it in the browser shortcut settings.
+---
 
-## Manual test checklist
+## Project commands
 
-These flows need a real Chrome or Brave window. Automated tests cover URL matching, ordering, search, storage validation, anchor lookup, and bounded restore retries.
+```bash
+npm install      # first time
+npm run build    # make the dist folder you load in the browser
+npm test         # run unit tests
+npm run dev      # live reload while you edit
+```
 
-1. Save a page, close the tab, click Resume. The page opens at the saved position.
-2. Save a Java page, switch to a saved Python page, open the popup. Python is at the top and marked current.
-3. Switch to a saved SQL page. SQL becomes the current item.
-4. Save, scroll further, click Update, close, Resume. The new position is restored.
-5. Save three pages, quit the browser, reopen. Checkpoints remain.
-6. Search. Matching names, titles, and URLs appear.
-7. Delete a checkpoint. It disappears and cannot be resumed.
-8. Resume on a page that renders late. Restoration waits and then lands.
-9. Resume after a small content edit. The original heading or paragraph is preferred over raw `scrollY`.
-10. Open `chrome://extensions` or `brave://settings` and try Save. You get a clear error, not a crash.
+Stop `npm run dev` before `npm run build`.
 
-## Contributing
+Need help:
 
-Issues and pull requests are welcome. Keep v1 focused on reliable save, update, and resume.
+- Node.js 18 or newer
+- npm
+- Git
 
-## Support
+---
 
-If ResumePoint is useful, you can [buy Madhav a coffee](https://buymeacoffee.com/problem_solver).
+## Folder map
+
+```text
+ResumePoint/
+├── src/
+│   ├── background/     opens pages and runs Resume
+│   ├── content/        reads and restores the place on the page
+│   ├── popup/          the small window you click
+│   ├── storage/        local save and backup
+│   └── utils/          URL matching, search, time
+├── public/icons/       extension icons
+├── dist/               built extension (created after npm run build)
+└── README.md
+```
+
+---
+
+## Common problems
+
+**"ResumePoint can't access this page"**  
+You are on a browser settings page or the extension store. Open a normal website that starts with `http` or `https`.
+
+**Resume opens the page but stays at the top**  
+The site may have changed. Click **Update** at the new place. Dynamic pages get a few restore tries.
+
+**"Unable to open this page"**  
+The link may be gone or the site is down.
+
+**Chrome and Brave show different saved pages**  
+Each browser has its own storage. Use Export and Import.
+
+**I changed the code and nothing changed**  
+Run `npm run build`, then click **Reload** on the extension card.
+
+---
+
+## Search words
+
+Chrome extension to save scroll position, Brave extension to restore reading position, continue reading webpage later, remember where I left off online, webpage checkpoint, reading resume manager, save study progress on a website, restore scroll after closing Chrome, Manifest V3 TypeScript React Vite extension, local unpacked Chromium extension, no cloud bookmark alternative with page position.
+
+---
 
 ## License
 
 [MIT](LICENSE)
+
+Issues and pull requests are welcome. Keep the main job simple: save, update, resume.

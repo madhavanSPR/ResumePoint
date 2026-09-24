@@ -3,7 +3,35 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Save where you stopped. Resume exactly there.",
+  "description": "Chrome and Brave extension that saves webpage reading position and restores scroll or heading when you resume.",
+  "keywords": [
+    "chrome-extension",
+    "brave-extension",
+    "chromium-extension",
+    "manifest-v3",
+    "scroll-position",
+    "reading-position",
+    "resume-reading",
+    "webpage-checkpoint",
+    "save-scroll-position",
+    "restore-scroll",
+    "study-extension",
+    "documentation-reader",
+    "local-extension",
+    "typescript",
+    "react",
+    "vite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madhavanSPR/ResumePoint.git"
+  },
+  "bugs": {
+    "url": "https://github.com/madhavanSPR/ResumePoint/issues"
+  },
+  "homepage": "https://github.com/madhavanSPR/ResumePoint#readme",
+  "author": "Madhavamoorthy",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
